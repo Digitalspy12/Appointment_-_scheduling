@@ -1,4 +1,5 @@
 import type { TimeSlot } from './booking-types'
+import { nowInIST, toISTDateStr } from './ist-date'
 
 interface SlotSettings {
   startTime: string // "10:00" (24h format)
@@ -42,9 +43,10 @@ export function generateTimeSlots(
   const slots: TimeSlot[] = []
   const startMins = timeToMinutes(settings.startTime)
   const endMins = timeToMinutes(settings.endTime)
-  const now = new Date()
-  const isToday = date.toDateString() === now.toDateString()
-  const currentMins = now.getHours() * 60 + now.getMinutes()
+  // Use IST-aware 'now' so this works correctly on UTC servers (e.g. Vercel).
+  const istNow = nowInIST()
+  const isToday = toISTDateStr(date) === toISTDateStr(istNow)
+  const currentMins = istNow.getHours() * 60 + istNow.getMinutes()
 
   // Check full day emergency block
   const isFullDayBlocked = busyBlocks.some((b) => b.isFullDay)
