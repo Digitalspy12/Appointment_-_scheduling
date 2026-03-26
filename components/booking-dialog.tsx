@@ -117,7 +117,7 @@ export function BookingDialog({
       visitorEmail: data.visitorEmail,
       visitorMobile: data.visitorMobile,
       reason: data.reason,
-      appointmentDate: selectedDate!.toISOString(),
+      appointmentDate: format(selectedDate!, 'yyyy-MM-dd'),
       startTime: selectedSlot!.startTime,
       endTime: selectedSlot!.endTime
     })
