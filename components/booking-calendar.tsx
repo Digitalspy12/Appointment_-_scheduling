@@ -52,7 +52,7 @@ export function BookingCalendar({ onSlotSelect }: BookingCalendarProps) {
 
     // Fetch real slots from Supabase via Server Action
     let isMounted = true
-    getAvailableSlots(selectedDate.toISOString()).then((fetchedSlots) => {
+    getAvailableSlots(format(selectedDate, 'yyyy-MM-dd')).then((fetchedSlots) => {
       if (!isMounted) return
       setSlots(fetchedSlots)
       setIsLoadingSlots(false)
